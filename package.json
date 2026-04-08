@@ -1,0 +1,28 @@
+{
+  "name": "form_buddy_ts",
+  "version": "1.0.0",
+  "description": "根据文档,自动网页表单填写",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aceliuchanghong/form_buddy_ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aceliuchanghong/form_buddy_ts/issues"
+  },
+  "homepage": "https://github.com/aceliuchanghong/form_buddy_ts#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}
