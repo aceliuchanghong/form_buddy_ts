@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Buddy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 320px;
+      min-height: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .settings-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    .settings-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .status-card {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-card.warning {
+      border-left: 3px solid #ff9800;
+    }
+
+    .status-card.success {
+      border-left: 3px solid #4caf50;
+    }
+
+    .status-card.error {
+      border-left: 3px solid #f44336;
+    }
+
+    .status-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .status-text {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .profile-select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      background: white;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background: #1976d2;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1565c0;
+    }
+
+    .btn-primary:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: #d0d0d0;
+    }
+
+    .actions {
+      margin-top: 16px;
+    }
+
+    .form-count {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #1976d2;
+    }
+
+    .form-label {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .agent-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .agent-toggle label {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .toggle {
+      position: relative;
+      width: 40px;
+      height: 22px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 22px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background-color: #1976d2;
+    }
+
+    .toggle input:checked + .toggle-slider:before {
+      transform: translateX(18px);
+    }
+
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 11px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 Form Buddy</h1>
+      <button class="settings-btn" id="settingsBtn" title="设置">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- API Key 未配置警告 -->
+    <div class="status-card warning" id="apiWarning" style="display: none;">
+      <div class="status-title">⚠️ 未配置 API Key</div>
+      <div class="status-text">
+        请先在设置中配置 OpenAI API Key 以启用 AI 智能填充
+      </div>
+    </div>
+
+    <!-- 表单检测状态 -->
+    <div class="status-card" id="formStatus">
+      <div class="form-label">检测到可填充字段</div>
+      <div class="form-count" id="fieldCount">-</div>
+    </div>
+
+    <!-- 用户档案选择 -->
+    <select class="profile-select" id="profileSelect">
+      <option value="">选择用户档案...</option>
+    </select>
+
+    <!-- Agent 模式开关 -->
+    <div class="agent-toggle">
+      <label for="agentToggle">Agent 模式（多步表单）</label>
+      <label class="toggle">
+        <input type="checkbox" id="agentToggle">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="actions">
+      <button class="btn btn-primary" id="fillBtn" disabled>
+        智能填充
+      </button>
+      <button class="btn btn-secondary" id="previewBtn">
+        预览匹配
+      </button>
+    </div>
+
+    <div class="footer">
+      Form Buddy v1.0.0 | 智能政务表单助手
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,28 +1,41 @@
 {
-  "name": "form_buddy_ts",
+  "name": "form_buddy",
   "version": "1.0.0",
-  "description": "根据文档,自动网页表单填写",
-  "main": "index.js",
+  "description": "AI智能政务表单填充助手 - Chrome扩展",
+  "main": "dist/background/index.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aceliuchanghong/form_buddy_ts.git"
   },
-  "keywords": [],
+  "keywords": [
+    "chrome-extension",
+    "form-filler",
+    "ai",
+    "openai",
+    "automation"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aceliuchanghong/form_buddy_ts/issues"
   },
   "homepage": "https://github.com/aceliuchanghong/form_buddy_ts#readme",
   "devDependencies": {
-    "@types/node": "^25.5.2",
+    "@types/chrome": "^0.0.268",
+    "@types/copy-webpack-plugin": "^10.1.0",
+    "@types/node": "^20.11.0",
+    "@types/webpack": "^5.28.5",
+    "copy-webpack-plugin": "^12.0.2",
+    "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.2"
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }
